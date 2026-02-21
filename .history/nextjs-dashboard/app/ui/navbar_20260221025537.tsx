@@ -1,0 +1,65 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Bars3Icon, XMarkIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import AcmeLogo from "@/app/ui/acme-logo";
+
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <header className="bg-blue-500 text-white p-4">
+      <div className="flex justify-between items-center">
+
+        {/* Logo */}
+        <AcmeLogo />
+
+        {/* Desktop menu */}
+        <nav className="hidden md:flex gap-6 items-center">
+          <Link href="/">Home</Link>
+          <Link href="/about">About</Link>
+          <Link href="/customers">Customers</Link>
+          <Link href="/membership">Membership</Link>
+          <Link href="/contact">Contact</Link>
+
+          {/* Login button */}
+          <Link
+            href="/login"
+            className="flex items-center gap-2 bg-white text-blue-500 px-4 py-2 rounded hover:bg-gray-100"
+          >
+            Log in <ArrowRightIcon className="w-4 h-4" />
+          </Link>
+        </nav>
+
+        {/* Mobile menu button */}
+        <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? (
+            <XMarkIcon className="w-6 h-6" />
+          ) : (
+            <Bars3Icon className="w-6 h-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <nav className="md:hidden mt-4 flex flex-col gap-4 bg-blue-600 p-4 rounded">
+          <Link href="/" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link href="/about" onClick={() => setMenuOpen(false)}>About</Link>
+          <Link href="/customers" onClick={() => setMenuOpen(false)}>Customers</Link>
+          <Link href="/membership" onClick={() => setMenuOpen(false)}>Membership</Link>
+          <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+
+          <Link
+            href="/login"
+            onClick={() => setMenuOpen(false)}
+            className="bg-white text-blue-500 px-4 py-2 rounded"
+          >
+            Log in
+          </Link>
+        </nav>
+      )}
+    </header>
+  );
+}
